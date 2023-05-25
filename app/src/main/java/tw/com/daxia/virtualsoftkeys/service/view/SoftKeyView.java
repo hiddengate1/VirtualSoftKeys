@@ -119,18 +119,21 @@ public abstract class SoftKeyView {
                 //Click event
                 if (v.getId() == IB_button_start.getId()) {
                     if (reverseFunctionButton) {
-                        accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
+                        audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
                     } else {
                         accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                     }
                 } else if (v.getId() == IB_button_home.getId()) {
-                    accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
-
+                    if (reverseFunctionButton) {
+                        audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+                    } else {
+                        audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+                    }
                 } else if (v.getId() == IB_button_end.getId()) {
                     if (reverseFunctionButton) {
                         accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                     } else {
-                        audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+                        audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
                     }
                 }
 
@@ -143,20 +146,7 @@ public abstract class SoftKeyView {
                 if (v.getId() == IB_button_start.getId()) {
                     accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_POWER_DIALOG);
                 } else if (v.getId() == IB_button_home.getId()) {
-                    Intent intent = accessibilityService.getPackageManager().getLaunchIntentForPackage(GOOGLE_APP_PACKAGE_NAME);
-                    if (intent != null) {
-                        // We found the activity now start the activity
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        accessibilityService.startActivity(intent);
-                    } else {
-                        // Bring user to the market or let them choose an app?
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        intent.setData(Uri.parse(GOOGLE_PLAY_LINK + GOOGLE_APP_PACKAGE_NAME));
-                        accessibilityService.startActivity(intent);
-                    }
-
+                    accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
                 } else if (v.getId() == IB_button_end.getId()) {
                     if (!reverseFunctionButton) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
