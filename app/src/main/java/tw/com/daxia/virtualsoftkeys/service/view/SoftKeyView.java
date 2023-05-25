@@ -57,7 +57,7 @@ public abstract class SoftKeyView {
         initBaseViewTheme();
         initTouchEvent();
         setSoftKeyEvent();
-        audioManager = accessibilityService.getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) accessibilityService.getSystemService(Context.AUDIO_SERVICE);
     }
 
     /*
