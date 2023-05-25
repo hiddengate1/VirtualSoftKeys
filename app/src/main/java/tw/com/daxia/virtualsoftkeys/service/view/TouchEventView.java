@@ -114,12 +114,13 @@ public class TouchEventView implements View.OnTouchListener {
     private void touchViewTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                initialTouchY = event.getRawY();
+//                 initialTouchY = event.getRawY();
                 break;
             case MotionEvent.ACTION_UP:
-                if ((initialTouchY - event.getRawY()) > miniTouchGestureHeight) {
-                    accessibilityService.showSoftKeyBar();
-                }
+//                 if ((initialTouchY - event.getRawY()) > miniTouchGestureHeight) {
+//                     accessibilityService.showSoftKeyBar();
+//                 }
+                accessibilityService.showSoftKeyBar();
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
