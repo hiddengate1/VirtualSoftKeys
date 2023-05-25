@@ -8,6 +8,8 @@ import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.media.AudioManager;
+import android.content.Context;
 
 import tw.com.daxia.virtualsoftkeys.common.SPFManager;
 import tw.com.daxia.virtualsoftkeys.service.ServiceFloating;
@@ -27,6 +29,7 @@ public abstract class SoftKeyView {
     protected View baseView;
     protected ImageButton IB_button_start, IB_button_end, IB_button_home;
     protected ServiceFloating accessibilityService;
+    protected AudioManager audioManager;
     /*
      *  Listener
      */
@@ -54,7 +57,7 @@ public abstract class SoftKeyView {
         initBaseViewTheme();
         initTouchEvent();
         setSoftKeyEvent();
-
+        audioManager = accessibilityService.getSystemService(Context.AUDIO_SERVICE);
     }
 
     /*
@@ -127,7 +130,7 @@ public abstract class SoftKeyView {
                     if (reverseFunctionButton) {
                         accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                     } else {
-                        accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
+                        audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
                     }
                 }
 
@@ -138,11 +141,7 @@ public abstract class SoftKeyView {
             @Override
             public boolean onLongClick(View v) {
                 if (v.getId() == IB_button_start.getId()) {
-                    if (reverseFunctionButton) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
-                        }
-                    }
+                    accessibilityService.performGlobalAction(AccessibilityService.GLOBAL_ACTION_POWER_DIALOG);
                 } else if (v.getId() == IB_button_home.getId()) {
                     Intent intent = accessibilityService.getPackageManager().getLaunchIntentForPackage(GOOGLE_APP_PACKAGE_NAME);
                     if (intent != null) {

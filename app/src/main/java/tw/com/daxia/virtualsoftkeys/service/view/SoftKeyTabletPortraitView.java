@@ -74,13 +74,14 @@ public class SoftKeyTabletPortraitView extends SoftKeyView {
             private void touchViewTouchEvent(MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        firstSoftKeyTouchY = event.getRawY();
+//                        firstSoftKeyTouchY = event.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
                         //Close the softKeyBar after swiping down more the 1/4 height
-                        if ((event.getRawY() - firstSoftKeyTouchY) > (softkeyBarHeight / 4)) {
-                            accessibilityService.hiddenSoftKeyBar(true);
-                        }
+//                        if ((event.getRawY() - firstSoftKeyTouchY) > (softkeyBarHeight / 4)) {
+//                            accessibilityService.hiddenSoftKeyBar(true);
+//                        }
+                        accessibilityService.hiddenSoftKeyBar(true);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         break;
